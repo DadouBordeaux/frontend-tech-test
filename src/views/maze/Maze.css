@@ -11,3 +11,13 @@
   display: flex;
   flex-direction: column;
 }
+
+.slot-with-player-on-it {
+  position: relative;
+  display: block;
+  width: 32px;
+}
+
+.absolute-position {
+  position: absolute;
+}

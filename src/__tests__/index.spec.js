@@ -1,7 +1,4 @@
-import {
-  addKeyWillBeAnEntryOrExitPointForFirstLine,
-  addKeyWillBeAnEntryOrExitPointForFirstColumn,
-} from "../core/getInAndOutForMaze"
+import { addKeyEntryAndExitPoint } from "../core/getInAndOutForMaze"
 
 export const mazeForTest = [
   [
@@ -41,12 +38,13 @@ export const mazeForTest = [
   ],
 ]
 
-describe(".addKeyWillBeAnEntryOrExitPointForFirstLine()", function () {
+describe(".addKeyEntryAndExitPoint()", function () {
   // - passable
   // * not passable
-  // | entry or exit point
+  // > entry point
+  // < exit point
 
-  // ||*
+  // ><*
   it("should return the second index that can be an entry or exit point", function () {
     const mazeFirstLine = [
       [
@@ -56,16 +54,16 @@ describe(".addKeyWillBeAnEntryOrExitPointForFirstLine()", function () {
       ],
     ]
 
-    const result = addKeyWillBeAnEntryOrExitPointForFirstLine(mazeFirstLine)
+    const result = addKeyEntryAndExitPoint(mazeFirstLine)
 
     expect(result[0]).toEqual([
-      { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
-      { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
-      { name: "Wall", passable: false, willBeAnEntryOrExitPoint: false },
+      { name: "Floor", passable: true, entryPoint: true, exitPoint: false },
+      { name: "Floor", passable: true, entryPoint: false, exitPoint: true },
+      { name: "Wall", passable: false, entryPoint: false, exitPoint: false },
     ])
   })
 
-  // |-|
+  // >-<
   it("should return the last index that can be an entry or exit point", function () {
     const mazeFirstLine = [
       [
@@ -75,16 +73,16 @@ describe(".addKeyWillBeAnEntryOrExitPointForFirstLine()", function () {
       ],
     ]
 
-    const result = addKeyWillBeAnEntryOrExitPointForFirstLine(mazeFirstLine)
+    const result = addKeyEntryAndExitPoint(mazeFirstLine)
 
     expect(result[0]).toEqual([
-      { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
-      { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-      { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
+      { name: "Floor", passable: true, entryPoint: true, exitPoint: false },
+      { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+      { name: "Floor", passable: true, entryPoint: false, exitPoint: true },
     ])
   })
 
-  // |-|
+  // >-<
   // ***
   it("should return the last index that can be an entry or exit point only on the fist line", function () {
     const mazeFirstLine = [
@@ -100,26 +98,26 @@ describe(".addKeyWillBeAnEntryOrExitPointForFirstLine()", function () {
       ],
     ]
 
-    const result = addKeyWillBeAnEntryOrExitPointForFirstLine(mazeFirstLine)
+    const result = addKeyEntryAndExitPoint(mazeFirstLine)
 
     expect(result).toEqual([
       [
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
+        { name: "Floor", passable: true, entryPoint: true, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: true },
       ],
       [
-        { name: "Floor", passable: false, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: false, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: false, willBeAnEntryOrExitPoint: false },
+        { name: "Floor", passable: false, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: false, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: false, entryPoint: false, exitPoint: false },
       ],
     ])
   })
 
-  // --|
+  // -->
   // ---
-  // |-*
-  it("should return the last index of the comunm that can be an entry or exit point", function () {
+  // <-*
+  it("should return the last index of the column that can be an entry or exit point", function () {
     const mazeFirstLine = [
       [
         { name: "Floor", passable: true },
@@ -138,23 +136,23 @@ describe(".addKeyWillBeAnEntryOrExitPointForFirstLine()", function () {
       ],
     ]
 
-    const result = addKeyWillBeAnEntryOrExitPointForFirstLine(mazeFirstLine)
+    const result = addKeyEntryAndExitPoint(mazeFirstLine)
 
     expect(result).toEqual([
       [
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: true, exitPoint: false },
       ],
       [
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
       ],
       [
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: true },
-        { name: "Floor", passable: true, willBeAnEntryOrExitPoint: false },
-        { name: "Floor", passable: false, willBeAnEntryOrExitPoint: false },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: true },
+        { name: "Floor", passable: true, entryPoint: false, exitPoint: false },
+        { name: "Floor", passable: false, entryPoint: false, exitPoint: false },
       ],
     ])
   })

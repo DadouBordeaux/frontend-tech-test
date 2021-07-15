@@ -1,4 +1,7 @@
-export function addKeyWillBeAnEntryOrExitPointForFirstLine(maze) {
+export function addKeyEntryAndExitPoint(maze) {
+  let isEntryPointAvailable = true
+  let isExitPointAvailable = true
+
   return maze.map((line, lineIndex) => {
     const isFirstLine = lineIndex === 0
 
@@ -17,11 +20,29 @@ export function addKeyWillBeAnEntryOrExitPointForFirstLine(maze) {
       const willBeAnEntryOrExitPointForFistLine =
         isThisSlotPassable && areAllSlotsAfterThisSlotUnpassable && isFirstLine
 
+      const willBeAnEntryOrExitPoint =
+        willBeAnEntryOrExitPointForFistLine ||
+        willBeAnEntryOrExitPointForFistColumn
+
+      const entryPoint = isEntryPointAvailable && willBeAnEntryOrExitPoint
+
+      const exitPoint =
+        isExitPointAvailable &&
+        !isEntryPointAvailable &&
+        willBeAnEntryOrExitPoint
+
+      if (entryPoint) {
+        isEntryPointAvailable = false
+      }
+
+      if (exitPoint) {
+        isExitPointAvailable = false
+      }
+
       return {
         ...slot,
-        willBeAnEntryOrExitPoint:
-          willBeAnEntryOrExitPointForFistLine ||
-          willBeAnEntryOrExitPointForFistColumn,
+        entryPoint,
+        exitPoint,
       }
     })
   })
