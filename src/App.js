@@ -1,18 +1,14 @@
 import React from "react"
 
-import Maze from "./Maze"
-import generateMaze from "./generateMaze"
+import Maze from "./views/maze/Maze"
+import { generateMaze } from "./core/mazeGenerator"
 
 import "./App.css"
 
-const maze = generateMaze()
-
 function App() {
-  console.log(maze)
-
   return (
     <div className="App">
-      <Maze maze={maze} />
+      <Maze maze={generateMaze()} />
     </div>
   )
 }

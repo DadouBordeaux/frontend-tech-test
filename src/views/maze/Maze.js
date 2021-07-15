@@ -1,6 +1,6 @@
 import React from "react"
 
-import * as images from "./images"
+import * as images from "../../images"
 import "./Maze.css"
 
 function Maze({ maze }) {

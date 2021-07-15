@@ -1,8 +1,8 @@
 import { Amazer, AmazerBuilder, RandomizedPrim } from "amazer"
 
-export default function generateMaze() {
+export function generateMaze() {
   const config = new AmazerBuilder()
-    .withSize({ width: 20, height: 20 })
+    .withSize({ width: 5, height: 5 })
     .using(RandomizedPrim)
     .build()
 
